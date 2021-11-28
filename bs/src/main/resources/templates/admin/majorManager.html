@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
-<<head>
+<head>
     <meta charset="utf-8">
     <title>layui</title>
     <meta name="renderer" content="webkit">
@@ -18,11 +18,12 @@
             <legend>搜索信息</legend>
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
+<!--                    <input type="hidden" id="mid">-->
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">楼层名称</label>
+                            <label class="layui-form-label">专业名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="name" autocomplete="off" class="layui-input">
+                                <input type="text" name="mname" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -58,18 +59,18 @@
         <div style="display: none;padding: 5px" id="addOrUpdateWindow">
             <form class="layui-form" style="width:90%;" id="dataFrm" lay-filter="dataFrm">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">楼层名称</label>
+                    <label class="layui-form-label">专业名称</label>
                     <div class="layui-input-block">
                         <!-- 楼层编号 -->
-                        <input type="hidden" name="id">
-                        <input type="text" name="name" lay-verify="required" autocomplete="off"
-                               placeholder="请输入楼层名称" class="layui-input">
+                        <input type="hidden" name="mid">
+                        <input type="text" name="mname" lay-verify="required" autocomplete="off"
+                               placeholder="请输入专业名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">楼层备注</label>
+                    <label class="layui-form-label">专业备注</label>
                     <div class="layui-input-block">
-                        <textarea class="layui-textarea" name="remark" id="content"></textarea>
+                        <textarea class="layui-textarea" name="mremark" id="content"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-row layui-col-xs12">
@@ -98,14 +99,14 @@
         //渲染表格组件
         var tableIns = table.render({
             elem: '#currentTableId',
-            url: '/admin/floor/list',
+            url: '/bs/major/list',
             toolbar: '#toolbarDemo',
             cols: [
                 [
                 {type: "checkbox", width: 50},
-                {field: 'id', width: 100, title: '楼层编号', align: "center"},
-                {field: 'name', minWidth: 150, title: '楼层名称', align: "center"},
-                {field: 'remark', minWidth: 200, title: '备注', align: "center"},
+                {field: 'mid', width: 100, title: '专业编号', align: "center"},
+                {field: 'mname', minWidth: 150, title: '专业名称', align: "center"},
+                {field: 'mremark', minWidth: 200, title: '备注', align: "center"},
                 {title: '操作', minWidth: 120, toolbar: '#currentTableBar', align:
                         "center"}
                 ]
@@ -149,15 +150,14 @@
         function openAddWindow() {
             mainIndex = layer.open({
                 type: 1,//打开类型
-                title: "添加楼层",//窗口标题
+                title: "添加专业",//窗口标题
                 area: ["800px", "400px"],//窗口宽高
                 content: $("#addOrUpdateWindow"),//引用的内容窗口
                 success: function () {
-
                     //清空表单数据
                     $("#dataFrm")[0].reset();
                     //添加的提交请求
-                    url = "/admin/floor/addFloor";
+                    url = "/bs/major/addMajor";
                 }
             });
         }
@@ -183,8 +183,37 @@
                 case "edit"://编辑按钮
                     openUpdateWindow(obj.data);//打开修改窗口
                     break;
+                case "delete"://编辑按钮
+                    deleteMajorById(obj.data);//打开修改窗口
+                    break;
             }
         });
+        /**
+         * 删除员工 当前行数据
+         * @param data
+         */
+        function deleteMajorById(data){
+            console.log(data)
+            //判断当前部门下是否存在员工
+            //思路：发送无刷新请求,即ajax请求。获取要删除的部门是否有员工
+            //通过{}取值，"id":data.id这种方式来取值
+            //获取请求的url和参数，返回的结果集
+            layer.confirm("确定要删除[<font color='red'>"+data.mname+"</font>]吗？", {icon: 3, title:'提示'}, function(index){
+                //发送ajax做无刷新操作
+                $.post("/bs/major/deleteMajorById",{"id":data.mid},function (result) {
+                    if(result.message){
+                        //删除数据之后要刷新表格
+                        tableIns.reload();
+                    }
+                    //提示
+                    layer.msg(result.message)
+                },"json");
+                layer.close(index);
+
+            });
+        }
+
+
         /**
          * 打开修改窗口
          * @param data 当前行的数据
@@ -192,14 +221,14 @@
         function openUpdateWindow(data) {
             mainIndex = layer.open({
                 type: 1,//打开类型
-                title: "修改楼层",//窗口标题
+                title: "修改专业信息",//窗口标题
                 area: ["800px", "400px"],//窗口宽高
                 content: $("#addOrUpdateWindow"),//引用的内容窗口
                 success: function () {
                     //表单数据回显
                     form.val("dataFrm",data);//参数1：lay-filter值 参数2：回显的数据
                     //修改的提交请求
-                    url = "/admin/floor/updateFloor";
+                    url = "/bs/major/updateMajor";
                 }
             });
         }
