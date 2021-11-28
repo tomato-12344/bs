@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtd.bs.mapper.StudentMapper">
+
+    <select id="students" resultType="com.xtd.bs.entity.Student">
+        SELECT s.*,c.`lname` AS lname  FROM student s
+              INNER JOIN
+          class c ON s.lno = c.`lno`
+        <where>
+            <if test="sno !=null and sno !=''">
+                and s.sno like concat('%',#{sno},'%')
+            </if>
+            <if test="sname !=null and sname !=''">
+                and s.sname like concat('%',#{sname},'%')
+            </if>
+            <if test="ssex != null">
+                and s.ssex = #{ssex}
+            </if>
+            <if test="lname != null and lname !=''">
+                and c.lname = #{lname}
+            </if>
+        </where>
+
+    </select>
+</mapper>
