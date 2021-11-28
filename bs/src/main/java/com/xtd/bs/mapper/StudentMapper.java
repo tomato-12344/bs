@@ -21,4 +21,6 @@ public interface StudentMapper extends BaseMapper<Student> {
     int addStudent(Student student);
 
     int updateStudent(Student student);
+
+    int deleteStudent(int id);
 }

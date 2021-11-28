@@ -19,5 +19,5 @@ public interface ClassMapper extends BaseMapper<Class> {
      * 查询所有班级
      * @return
      */
-    public List<Class> findAllClass();
+     List<Class> findAllClass();
 }

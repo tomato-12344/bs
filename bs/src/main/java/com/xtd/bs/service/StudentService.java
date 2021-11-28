@@ -37,4 +37,10 @@ public interface StudentService extends IService<Student> {
      */
     int updateStudent(Student student);
 
+    /**
+     * 删除一个学生
+     * @param id
+     * @return
+     */
+    int deleteStudent(int id);
 }

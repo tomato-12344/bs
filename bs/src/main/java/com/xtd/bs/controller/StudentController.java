@@ -18,11 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -133,6 +130,20 @@ public class StudentController {
         return JSON.toJSONString(map);
     }
 
+    @PostMapping("deleteStudentById")
+    public String updateStudent(@RequestParam("id") Integer id){
+        System.out.println(id);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        if(studentService.deleteStudent(id)>0){
+            map.put(SystemConstant.SUCCESS,true);
+            map.put(SystemConstant.MESSAGE,"删除成功");
+        }else{
+            map.put(SystemConstant.SUCCESS,false);
+            map.put(SystemConstant.MESSAGE,"删除失败");
+        }
+        return JSON.toJSONString(map);
+    }
 
 
 

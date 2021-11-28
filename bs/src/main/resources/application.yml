@@ -49,13 +49,13 @@ spring:
 
 
 #配置日志文件参数
-#logging:
-#  file:
-#    path: C:/Users/谢腾达/Desktop/bishe/log
-#  level:
-#    org:
-#      springframework: info
-#    hibernate: debug
+logging:
+  file:
+    path: C:/Users/谢腾达/Desktop/bishe/log
+  level:
+    org:
+      springframework: info
+    hibernate: debug
 
 mybatis-plus:
   mapper-locations: classpath:/com/xtd/bs/mapper/xml/*.xml

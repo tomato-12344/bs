@@ -48,4 +48,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     public int updateStudent(Student student) {
         return studentMapper.updateStudent(student);
     }
+
+    @Override
+    public int deleteStudent(int id) {
+        return studentMapper.deleteStudent(id);
+    }
+
 }

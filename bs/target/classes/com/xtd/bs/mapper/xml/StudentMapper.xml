@@ -3,6 +3,7 @@
 <mapper namespace="com.xtd.bs.mapper.StudentMapper">
 
 
+
     <select id="students" resultType="com.xtd.bs.entity.Student">
         SELECT s.*,c.`lname` AS lname  FROM student s
               INNER JOIN
@@ -17,12 +18,13 @@
             <if test="ssex != null">
                 and s.ssex = #{ssex}
             </if>
-            <if test="lname != null and lname !=''">
-                and c.lname = #{lname}
+            <if test="lno != null ">
+                and c.lno = #{lno}
             </if>
             <if test="scarid != null and scarid !=''">
                 and s.scarid = #{scarid}
             </if>
+
         </where>
     </select>
 
@@ -30,7 +32,6 @@
          insert into student(sno,sname,ssex,sbirthday,scarid,sphone,sparentphone,dormitory,lno)
          values(#{sno},#{sname},#{ssex},#{sbirthday},#{scarid},#{sphone},#{sparentPhone},#{dormitory},#{lno})
     </insert>
-
 
     <update id="updateStudent" parameterType="com.xtd.bs.entity.Student">
         update student
@@ -64,7 +65,9 @@
             </if>
         </set>
         where sid = #{sid}
+    </update>
 
-</update>
-
+    <delete id="deleteStudent" parameterType="int">
+        delete from student where sid = #{sid}
+    </delete>
 </mapper>

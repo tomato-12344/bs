@@ -350,8 +350,6 @@
             });
         }
 
-
-
         //打开修改窗口
         function openUpdateWindow(data) {
             console.log(data)
@@ -364,7 +362,6 @@
                     success: function () {
                         //表单数据回显 form.val拿到lay-filter属性
                         var hh = form.val("dataFrm",data);//参数1：lay-filter值 参数2
-                        // form.val('')
 
                         console.log("回显的数据"+hh.sno+hh.sbirthday+hh.lno+hh.sname)
                         //修改的提交请求
@@ -400,13 +397,14 @@
          * @param data
          */
         function deleteById(data){
+            console.log(data)
             //判断当前部门下是否存在员工
             //思路：发送无刷新请求,即ajax请求。获取要删除的部门是否有员工
             //通过{}取值，"id":data.id这种方式来取值
             //获取请求的url和参数，返回的结果集
-            layer.confirm("确定要删除[<font color='red'>"+data.name+"</font>]吗？", {icon: 3, title:'提示'}, function(index){
+            layer.confirm("确定要删除[<font color='red'>"+data.sname+"</font>]吗？", {icon: 3, title:'提示'}, function(index){
                 //发送ajax做无刷新操作
-                $.post("/admin/employee/deleteById",{"id":data.id},function (result) {
+                $.post("/bs/student/deleteStudentById",{"id":data.sid},function (result) {
                     if(result.message){
                         //删除数据之后要刷新表格
                         tableIns.reload();
