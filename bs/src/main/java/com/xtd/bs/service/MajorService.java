@@ -27,4 +27,6 @@ public interface MajorService extends IService<Major> {
     int updateMajor(Major major);
 
     int deleteMajor(Integer id);
+
+    List<Major> majorList();
 }

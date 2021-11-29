@@ -4,12 +4,12 @@ package com.xtd.bs.controller;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xtd.bs.entity.Major;
+import com.xtd.bs.entity.Classes;
 import com.xtd.bs.entity.Student;
-import com.xtd.bs.service.MajorService;
+import com.xtd.bs.service.ClassesService;
 import com.xtd.bs.utils.R;
 import com.xtd.bs.utils.SystemConstant;
-import com.xtd.bs.vo.MajorVo;
+import com.xtd.bs.vo.ClassVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import javax.imageio.ImageReader;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,55 +31,60 @@ import java.util.Map;
  * @since 2021-11-28
  */
 @RestController
-@RequestMapping("/bs/major")
-public class MajorController {
-
+@RequestMapping("/bs/classes")
+public class ClassesController {
     @Autowired
-    private MajorService majorService;
+    private ClassesService classService;
 
-    @RequestMapping("list")
-    public R findAllMajor(MajorVo majorVo){
-        System.out.println("majorVo = " + majorVo);
-        System.out.println(majorVo);
-        System.out.println("==================================>"+majorVo.getPage()+majorVo.getLimit());
-        PageHelper.startPage(majorVo.getPage(),majorVo.getLimit());
-        List<Major> employeeList = majorService.findAllMajor(majorVo);
-        PageInfo<Major> pageInfo = new PageInfo<>(employeeList);
-        return new R(pageInfo.getTotal(),pageInfo.getList());
+    @RequestMapping("classesList")
+    public String findAllClass(){
+        return JSON.toJSONString(classService.findAllClass());
     }
 
 
+    @RequestMapping("classesListByPage")
+    public R findAllClassByPage(ClassVo classVo){
+        PageHelper.startPage(classVo.getPage(),classVo.getLimit());
+        List<Classes> classByPage = classService.findAllClassByPage(classVo);
+        PageInfo<Classes> pageInfo = new PageInfo<>(classByPage);
+        return new R(pageInfo.getTotal(),pageInfo.getList());
+    }
 
-    @PostMapping("addMajor")
-    public String addMajor(Major major){
+    @PostMapping("addClasses")
+    public String addClasses(Classes classes){
+        System.out.println("class = " + classes);
         Map<String, Object> map = new HashMap<String, Object>();
-        if (majorService.addMajor(major) > 0){
+        if (classService.addClasses(classes) > 0){
             map.put(SystemConstant.SUCCESS,true);
             map.put(SystemConstant.MESSAGE,"添加成功");
         }else{
             map.put(SystemConstant.SUCCESS,false);
             map.put(SystemConstant.MESSAGE,"添加失败");
         }
+
         return JSON.toJSONString(map);
     }
 
-    @PostMapping("updateMajor")
-    public String updateMajor(Major major){
+
+    @PostMapping("updateClasses")
+    public String updateClasses(Classes classes){
+        System.out.println("classes = " + classes);
         Map<String, Object> map = new HashMap<String, Object>();
-        if (majorService.updateMajor(major) > 0){
+        if (classService.updateClasses(classes) > 0){
             map.put(SystemConstant.SUCCESS,true);
             map.put(SystemConstant.MESSAGE,"修改成功");
         }else{
             map.put(SystemConstant.SUCCESS,false);
             map.put(SystemConstant.MESSAGE,"修改失败");
         }
+
         return JSON.toJSONString(map);
     }
 
-    @PostMapping("deleteMajorById")
-    public String deleteMajorById(@RequestParam("id") Integer id){
+    @PostMapping("deleteClassesById")
+    public String deleteClassesById(@RequestParam("id") Integer id){
         Map<String, Object> map = new HashMap<String, Object>();
-        if (majorService.deleteMajor(id) > 0){
+        if (classService.deleteClassesById(id) > 0){
             map.put(SystemConstant.SUCCESS,true);
             map.put(SystemConstant.MESSAGE,"删除成功");
         }else{
@@ -89,14 +93,6 @@ public class MajorController {
         }
         return JSON.toJSONString(map);
     }
-
-
-
-    @RequestMapping("majorList")
-    public String majorList(){
-        return JSON.toJSONString(majorService.majorList());
-    }
-
 
 }
 

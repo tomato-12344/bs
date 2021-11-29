@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Class implements Serializable {
+public class Classes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,21 @@ public class Class implements Serializable {
     private Integer majorid;
 
     private Integer tno;
+
+    /**
+     * 专业名字
+     */
+    private String mname;
+
+    /**
+     * 辅导员名字
+     */
+    private String tname;
+
+    /**
+     * 辅导员电话号码
+     */
+    private String tphone;
 
 
 }

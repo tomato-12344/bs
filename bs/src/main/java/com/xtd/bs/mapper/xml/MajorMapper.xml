@@ -11,6 +11,7 @@
         </where>
     </select>
 
+
     <insert id="addMajor">
         insert into major ( mname, mremark) VALUES (#{mname},#{mremark})
     </insert>
@@ -33,4 +34,8 @@
         delete from major where mid = #{id}
     </delete>
 
+
+    <select id="majorList" resultType="com.xtd.bs.entity.Major">
+        select * from major
+    </select>
 </mapper>

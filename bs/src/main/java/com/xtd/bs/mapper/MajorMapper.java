@@ -23,4 +23,6 @@ public interface MajorMapper extends BaseMapper<Major> {
     int updateMajor(Major major);
 
     int deleteMajor(Integer id);
+
+    List<Major> majorList();
 }

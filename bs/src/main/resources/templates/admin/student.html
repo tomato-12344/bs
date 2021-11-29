@@ -155,10 +155,10 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">学生班级</label>
                         <div class="layui-input-inline">
-                        <select name="lno" autocomplete="off" id="l_no" class="layui-input">
-                            <option value="">请选择班级</option>
-                        </select>
-                    </div>
+                            <select name="lno" autocomplete="off" id="l_no" class="layui-input">
+                                <option value="">请选择班级</option>
+                            </select>
+                        </div>
                     </div>
 
                 </div>
@@ -255,7 +255,7 @@
         });
 
         //发送ajax请求查询班级列表 //已成功
-        $.get("/bs/class/classList",function (result) {
+        $.get("/bs/classes/classesList",function (result) {
             // console.log(result)
             var html = "";
             //循环遍历
@@ -313,7 +313,7 @@
 
         upload.render({
             elem: '#importExcel',
-            url: '/manager/student/importExcel',
+            url: '/bs/student/importExcel',
             accpet: 'file',
             exts : 'xlsx',
             done: function(res){
@@ -362,7 +362,7 @@
                     success: function () {
                         //表单数据回显 form.val拿到lay-filter属性
                         var hh = form.val("dataFrm",data);//参数1：lay-filter值 参数2
-
+                        console.log("回显的数据2"+data.valueOf())
                         console.log("回显的数据"+hh.sno+hh.sbirthday+hh.lno+hh.sname)
                         //修改的提交请求
                         url = "/bs/student/updateStudent";

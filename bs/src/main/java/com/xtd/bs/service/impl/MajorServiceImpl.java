@@ -42,4 +42,9 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
     public int deleteMajor(Integer id) {
         return majorMapper.deleteMajor(id);
     }
+
+    @Override
+    public List<Major> majorList() {
+        return majorMapper.majorList();
+    }
 }

@@ -1,15 +1,9 @@
 package com.xtd.bs.controller;
 
-
-import com.xtd.bs.utils.SystemConstant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpSession;
-
 @Controller
-
 public class SysController {
 
     /**
@@ -62,5 +56,14 @@ public class SysController {
     @RequestMapping("toMajorManager")
     public String toMajorManager(){
         return "admin/majorManager";
+    }
+
+    /**
+     * 去到班级管理专业
+     * @return
+     */
+    @RequestMapping("toClassManager")
+    public String toClassManager(){
+        return "admin/classManager";
     }
 }

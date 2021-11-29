@@ -7,7 +7,7 @@
     <select id="students" resultType="com.xtd.bs.entity.Student">
         SELECT s.*,c.`lname` AS lname  FROM student s
               INNER JOIN
-          class c ON s.lno = c.`lno`
+          classes c ON s.lno = c.`lno`
         <where>
             <if test="sno !=null and sno !=''">
                 and s.sno like concat('%',#{sno},'%')
