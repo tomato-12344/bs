@@ -66,4 +66,14 @@ public class SysController {
     public String toClassManager(){
         return "admin/classManager";
     }
+
+    /**
+     * 去到学籍管理页面
+     * @return
+     */
+    @RequestMapping("toSemesterManager")
+    public String toSemesterManager(){
+        return "admin/semesterManager";
+    }
+
 }
